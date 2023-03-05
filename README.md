@@ -13,13 +13,12 @@ An arena shooter with horror elements inspired by demon daggers. Still a work in
     
   ### Outline
   <img src="Media/AddedEffects.png" width = "600"> 
-    The outline pass uses the light and texture to determine the color of the outline. Outlines are calculated using a convolution on the depth buffer to detect edges.
+    The outline pass uses the light and texture values to determine the color of the outline. Outlines are calculated using a convolution on the depth buffer to detect edges.
 
 ## Movement
-  The movement uses a port of quake's movement to Unity. I'm thinking of switching to cinemachine for camera controlls to add more flair. 
+  The movement uses a port of quake's movement to Unity. I'm thinking of switching to cinemachine for camera controls to add more flair. 
   
 ## Combat Loop
 <img src="Media/Demo.gif" width = "600"> 
-  The combat revolves around your two shot revolver. With each shot, the bullet changes element from light to dark and dark to light. My intent is to have enemies
-  for both elements. Bullets of the same type heal them while the opposite element damages. The main game loop would involve making fast target switches. My aim is to
-  implement a score system (and combo multiplier) so that missing a shot makes you lose your combo.
+  The combat revolves around your two-shot revolver. with each shot, the bullet changes elements from light to dark and dark to light. Might intent is to have enemies
+  for both elements. Bullets of the same type heal them while the opposite element damages them. The main game loop would involve making fast target switches. My aim is to implement a scoring system (and combo multiplier) so that missing a shot makes you lose your combo.
