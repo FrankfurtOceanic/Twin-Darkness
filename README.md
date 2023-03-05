@@ -1,6 +1,6 @@
+# Twin-Darkness
 <img src="Media/Thumbnail.png" width = "900">   
 
-# Twin-Darkness
  
 An arena shooter with horror elements inspired by demon daggers. Still a work in progress but I'm gaining ground.
 
