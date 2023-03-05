@@ -7,7 +7,10 @@ public class Weapon : MonoBehaviour
     public float FireRate = 15f; //per second
     public Camera fpsCam;
     public ParticleSystem MuzzleEffect;
+    public Animator anim;
 
+    public AudioSource SoundSource;
+    public AudioClip SoundClip;
     private float TimeToFire = 0;
     // Start is called before the first frame update
     void Start()
@@ -29,6 +32,8 @@ public class Weapon : MonoBehaviour
     void Shoot()
     {
         MuzzleEffect.Play();
+        SoundSource.PlayOneShot(SoundClip);
+        anim.SetTrigger("Shoot");
 
         RaycastHit hit;
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, Range))
