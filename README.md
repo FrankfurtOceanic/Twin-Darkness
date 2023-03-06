@@ -20,5 +20,5 @@ An arena shooter with horror elements inspired by demon daggers. Still a work in
   
 ## Combat Loop
 <img src="Media/Demo.gif" width = "600"> 
-  The combat revolves around your two-shot revolver. with each shot, the bullet changes elements from light to dark and dark to light. Might intent is to have enemies
+  The combat revolves around your two-shot revolver. with each shot, the bullet changes elements from light to dark and dark to light. My intent is to have enemies
   for both elements. Bullets of the same type heal them while the opposite element damages them. The main game loop would involve making fast target switches. My aim is to implement a scoring system (and combo multiplier) so that missing a shot makes you lose your combo.
