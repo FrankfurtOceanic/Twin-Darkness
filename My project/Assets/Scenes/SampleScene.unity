@@ -5389,7 +5389,7 @@ MonoBehaviour:
   YIntensity: 0.05
   XIntensity: 0.05
   Frequency: 9
-  SettleSpeed: 1
+  SettleSpeed: 7
 --- !u!114 &261725417
 MonoBehaviour:
   m_ObjectHideFlags: 0
