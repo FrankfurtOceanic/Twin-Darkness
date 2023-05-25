@@ -9,6 +9,7 @@ public class Boid : MonoBehaviour
 
     public Vector3 direction;
     private Vector3 nextDirection;
+    private Rigidbody rb;
 
 
 
@@ -16,6 +17,7 @@ public class Boid : MonoBehaviour
     private void Start()
     {
         direction = transform.forward;
+        rb = this.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -28,9 +30,10 @@ public class Boid : MonoBehaviour
         Vector3 targetDir = Vector3.Normalize(Target());
 
 
-        Debug.DrawRay(transform.position, separate, Color.magenta);
-        Debug.DrawRay(transform.position, align, Color.blue);
-        Debug.DrawRay(transform.position, cohesion, Color.green);
+        Debug.DrawRay(transform.position, separate * BM.sepStrength, Color.magenta);
+        Debug.DrawRay(transform.position, align * BM.aliStrength, Color.blue);
+        Debug.DrawRay(transform.position, cohesion * BM.cohStrength, Color.green);
+        Debug.DrawRay(transform.position, targetDir * BM.targetStrength, Color.cyan);
 
         nextDirection = Vector3.zero;
         nextDirection += separate * BM.sepStrength;
@@ -39,12 +42,14 @@ public class Boid : MonoBehaviour
         nextDirection += targetDir * BM.targetStrength;
 
         nextDirection = Vector3.Normalize(nextDirection);
+        Debug.DrawRay(transform.position, targetDir, Color.yellow);
+
 
     }
 
     public Vector3 TransferDirection()
     {
-        direction = Vector3.RotateTowards(transform.forward, nextDirection, BM.rotationSpeed * Time.deltaTime, 0.0f);
+        direction = Vector3.RotateTowards(transform.forward, nextDirection, BM.rotationSpeed, 0.0f);
         return direction;
     }
 
@@ -55,7 +60,7 @@ public class Boid : MonoBehaviour
         Vector3 sumDif = Vector3.zero;
         foreach (GameObject boid in BM.Boids)
         {
-            if (boid != this)
+            if (boid != gameObject)
             {
                 if (Vector3.Distance(transform.position, boid.transform.position) <= BM.rangeRadius * BM.sepRadiusCoef)
                 {
@@ -71,7 +76,7 @@ public class Boid : MonoBehaviour
         Vector3 avgDir = Vector3.zero;
         foreach (GameObject boid in BM.Boids)
         {
-            if (boid != this)
+            if (boid != gameObject)
             {
                 if (Vector3.Distance(transform.position, boid.transform.position) <= BM.rangeRadius)
                 {
@@ -88,7 +93,7 @@ public class Boid : MonoBehaviour
         int count = 0;
         foreach (GameObject boid in BM.Boids)
         {
-            if(boid != this)
+            if(boid != gameObject)
             {
                 if (Vector3.Distance(transform.position, boid.transform.position) <= BM.rangeRadius)
                 {
@@ -126,6 +131,20 @@ public class Boid : MonoBehaviour
     private void OnDestroy()
     {
         BM.Boids.Remove(gameObject);
+    }
+
+    public void moveBoid()
+    {
+        rb.velocity = direction * BM.speed;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(transform.position, BM.rangeRadius);
+
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawSphere(transform.position, BM.rangeRadius * BM.sepRadiusCoef);
     }
 
 

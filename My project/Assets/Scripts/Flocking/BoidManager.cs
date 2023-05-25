@@ -24,9 +24,9 @@ public class BoidManager : MonoBehaviour
     [Range(0f, 10f)]
     public float rangeRadius = 3;
 
-    [Range(0.01f, 10f)]
-    [SerializeField] private float speed = 1;
-    [Range(0.01f, Mathf.PI*2)]
+    [Range(0.01f, 50f)]
+    [SerializeField] public float speed = 1;
+    [Range(0.01f, Mathf.PI*10)]
     public float rotationSpeed = Mathf.PI / 4;
 
     public Transform target; //Where the boids should go to
@@ -44,11 +44,15 @@ public class BoidManager : MonoBehaviour
         {
             boid.GetComponent<Boid>().CalcNextDirection();
         }
+    }
 
+    private void FixedUpdate()
+    {
         foreach (GameObject boid in Boids)
         {
             Vector3 dir = boid.GetComponent<Boid>().TransferDirection();
-            boid.transform.position += dir * speed * Time.deltaTime;
+            boid.GetComponent<Boid>().moveBoid();
+            //boid.transform.position += dir * speed * Time.deltaTime;
 
             // Draw a ray pointing at our target in
             Debug.DrawRay(boid.transform.position, dir, Color.red);
