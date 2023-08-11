@@ -42,6 +42,7 @@ public class Weapon : MonoBehaviour
             if(shot != null)
             {
                 shot.TakeDamage(Damage);
+                
             }
         }
     }

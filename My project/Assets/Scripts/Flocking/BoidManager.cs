@@ -26,7 +26,7 @@ public class BoidManager : MonoBehaviour
 
     [Range(0.01f, 50f)]
     [SerializeField] public float speed = 1;
-    [Range(0.01f, Mathf.PI*10)]
+    [Range(0.0001f, 1f)]
     public float rotationSpeed = Mathf.PI / 4;
 
     public Transform target; //Where the boids should go to
@@ -51,14 +51,14 @@ public class BoidManager : MonoBehaviour
         foreach (GameObject boid in Boids)
         {
             Vector3 dir = boid.GetComponent<Boid>().TransferDirection();
-            boid.GetComponent<Boid>().moveBoid();
             //boid.transform.position += dir * speed * Time.deltaTime;
 
             // Draw a ray pointing at our target in
             Debug.DrawRay(boid.transform.position, dir, Color.red);
 
             // Calculate a rotation a step closer to the target and applies rotation to this object
-            boid.transform.rotation = Quaternion.LookRotation(dir);
+            boid.transform.rotation = Quaternion.Slerp(boid.transform.rotation, Quaternion.LookRotation(dir, Vector3.up), rotationSpeed);
+            boid.GetComponent<Boid>().moveBoid();
         }
     }
 

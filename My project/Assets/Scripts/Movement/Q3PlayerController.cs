@@ -1,5 +1,8 @@
-﻿using Unity.VisualScripting;
+﻿using System.Collections;
+using Unity.VisualScripting;
+using UnityEditor.Build.Content;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Q3Movement
 {
@@ -16,12 +19,33 @@ namespace Q3Movement
             public float Acceleration;
             public float Deceleration;
 
+            private float DefaultSpeed;
+            private float DefaultAcceleration;
+            private float DefaultDeceleration;
+
             public MovementSettings(float maxSpeed, float accel, float decel)
             {
-                MaxSpeed = maxSpeed;
-                Acceleration = accel;
-                Deceleration = decel;
+                MaxSpeed = DefaultSpeed = maxSpeed;
+                Acceleration = DefaultAcceleration = accel;
+                Deceleration = DefaultAcceleration = decel;
+
             }
+
+            public void reset()
+            {
+                MaxSpeed = DefaultSpeed;
+                Acceleration = DefaultAcceleration;
+                Deceleration = DefaultAcceleration;
+            }
+
+            public void PercentChange(float percent)
+            {
+                percent = 1 + percent;
+                MaxSpeed *= percent;
+                Acceleration *= percent;
+                Deceleration *= percent;
+            }
+
         }
 
         [Header("Aiming")]
@@ -65,9 +89,20 @@ namespace Q3Movement
         private Transform m_Tran;
         private Transform m_CamTran;
 
+        public Gauge m_BerserkGauge;
+        public GameObject m_GaugeVisuals;
+        private float m_BerserkTimer = 0f;
+        private bool m_Berserk_Up = true; //whether or not berserk mode will activate
+        private bool m_BerserkActive;
 
+
+        private void Awake()
+        {
+            GameManager.Player = gameObject;
+        }
         private void Start()
         {
+            m_GaugeVisuals.SetActive(false);
             m_Tran = transform;
             m_Character = GetComponent<CharacterController>();
 
@@ -305,5 +340,76 @@ namespace Q3Movement
             m_Camera.transform.localRotation = Quaternion.Slerp(m_Camera.transform.localRotation, targetRotation, m_TiltSpeed * Time.deltaTime);
         }
         */
+
+        public void hit()
+        {
+            if (m_Berserk_Up)
+            {
+                //go into berserk mode if it's available.
+                setBerserkActive(true);
+            }
+
+            else
+            {
+                //die 
+            }
+        }
+        public void slow(float slowAmount) {
+            m_GroundSettings.PercentChange(slowAmount);
+        }
+
+        public void EnemyKilled(float gaugePercent, float points)
+        {
+            //add gauge amount on kill
+            if (m_BerserkActive)
+            {
+                m_BerserkGauge.addPercentage(gaugePercent);
+
+                if (m_BerserkGauge.isFull())
+                {
+                    setBerserkActive(false);
+                }
+            }
+
+            //TODO add points
+            //score += points
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="active">Set to true to activate berserk, set to false to go on cooldown</param>
+        private void setBerserkActive(bool active)
+        {
+            if (active)
+            {
+                if (!m_BerserkActive)
+                {
+                    m_BerserkActive = true;
+                    m_GaugeVisuals.SetActive(true);
+                    m_BerserkGauge.Reset();
+                    m_Berserk_Up = false;
+                }
+            }
+
+            else
+            {
+                if(m_BerserkActive) 
+                {
+                    m_BerserkActive = false;
+                    m_BerserkGauge.Reset();
+                    m_GaugeVisuals.SetActive(false);
+                    StartCoroutine(berserkCooldown());//start berserk cooldown
+                }
+            }
+        }
+
+        IEnumerator berserkCooldown()
+        {
+            yield return new WaitForSeconds(m_BerserkTimer);
+            m_Berserk_Up = true;
+        }
+
+
     }
 }

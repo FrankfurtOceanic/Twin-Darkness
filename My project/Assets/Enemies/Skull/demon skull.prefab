@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3425303247394117084}
+  - component: {fileID: 2341826382982580233}
   - component: {fileID: 2883331094620530003}
   - component: {fileID: 2883331094620530006}
   - component: {fileID: 2883331094620530004}
-  - component: {fileID: 2341826382982580233}
   - component: {fileID: -1583563215196346319}
   - component: {fileID: 3336650936389280914}
   - component: {fileID: 3760660751483605408}
@@ -43,6 +43,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 224.366, z: 0}
+--- !u!54 &2341826382982580233
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2648907728203501414}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!64 &2883331094620530003
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -52,7 +68,7 @@ MeshCollider:
   m_GameObject: {fileID: 2648907728203501414}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
@@ -93,22 +109,9 @@ MonoBehaviour:
   DeathSound: {fileID: 8300000, guid: 217c1c709f8d0fc49ac45dad252a4def, type: 3}
   volume: 3
   delay: 0.05
---- !u!54 &2341826382982580233
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2648907728203501414}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  points: 100
+  gaugePercent: 0.2
+  player: {fileID: 2918424449679861319, guid: 9297d407ebb4bc6409e84381611026ed, type: 3}
 --- !u!135 &-1583563215196346319
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -118,7 +121,7 @@ SphereCollider:
   m_GameObject: {fileID: 2648907728203501414}
   m_Material: {fileID: 13400000, guid: ced0f7f0e55425b49820dca528a8a299, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 19.06
   m_Center: {x: 0, y: 0, z: -3.6}

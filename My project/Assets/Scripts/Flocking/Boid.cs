@@ -24,7 +24,7 @@ public class Boid : MonoBehaviour
     public void CalcNextDirection()
     {
         //Calculate 
-        Vector3 separate = Vector3.Normalize(Separation());
+        Vector3 separate = Separation();
         Vector3 align = Vector3.Normalize(Align());
         Vector3 cohesion = Vector3.Normalize(Cohesion());
         Vector3 targetDir = Vector3.Normalize(Target());
@@ -49,8 +49,9 @@ public class Boid : MonoBehaviour
 
     public Vector3 TransferDirection()
     {
-        direction = Vector3.RotateTowards(transform.forward, nextDirection, BM.rotationSpeed, 0.0f);
-        return direction;
+        //direction = Vector3.RotateTowards(transform.forward, nextDirection, BM.rotationSpeed, 0.0f);
+        //direction = Vector3.Slerp(transform.forward, nextDirection, BM.rotationSpeed);
+        return nextDirection;
     }
 
 
@@ -58,16 +59,24 @@ public class Boid : MonoBehaviour
     {
 
         Vector3 sumDif = Vector3.zero;
+        int count = 0;
         foreach (GameObject boid in BM.Boids)
         {
             if (boid != gameObject)
             {
                 if (Vector3.Distance(transform.position, boid.transform.position) <= BM.rangeRadius * BM.sepRadiusCoef)
                 {
-                    sumDif += transform.position - boid.transform.position;
+                    Vector3 dif = transform.position - boid.transform.position;
+                    sumDif += dif * (1 - dif.magnitude/(BM.rangeRadius* BM.sepRadiusCoef));
+                    count++;
                 }
             }
         }
+        if(count > 0 )
+        {
+            return sumDif / count;
+        }
+
         return sumDif;
     }
 
@@ -135,6 +144,7 @@ public class Boid : MonoBehaviour
 
     public void moveBoid()
     {
+        direction = transform.forward;
         rb.velocity = direction * BM.speed;
     }
 
