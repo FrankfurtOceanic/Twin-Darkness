@@ -11,17 +11,12 @@ namespace Q3Movement
     {
         [SerializeField] private float m_XSensitivity = 2f;
         [SerializeField] private float m_YSensitivity = 2f;
-        [SerializeField] private bool m_ClampVerticalRotation = false;
+        [SerializeField] private bool m_ClampVerticalRotation = true;
         [SerializeField] private float m_MinimumX = -90F;
         [SerializeField] private float m_MaximumX = 90F;
         [SerializeField] private bool m_Smooth = false;
         [SerializeField] private float m_SmoothTime = 5f;
         [SerializeField] private bool m_LockCursor = true;
-
-        // tilting params
-        [SerializeField] private float m_TiltMaxRotation = 0f;
-        [SerializeField] private float m_TiltSpeed = 1.0f;
-        float tiltVelocity = 0.0f;
 
         private Quaternion m_CharacterTargetRot;
         private Quaternion m_CameraTargetRot;
@@ -38,15 +33,12 @@ namespace Q3Movement
             float yRot = Input.GetAxis("Mouse X") * m_XSensitivity;
             float xRot = Input.GetAxis("Mouse Y") * m_YSensitivity;
 
-            
-
-
             m_CharacterTargetRot *= Quaternion.Euler(0f, yRot, 0f);
             m_CameraTargetRot *= Quaternion.Euler(-xRot, 0f, 0f);
 
             if (m_ClampVerticalRotation)
             {
-                //m_CameraTargetRot = ClampRotationAroundXAxis(m_CameraTargetRot);
+                m_CameraTargetRot = ClampRotationAroundXAxis(m_CameraTargetRot);
             }
 
             if (m_Smooth)
@@ -61,7 +53,6 @@ namespace Q3Movement
                 character.localRotation = m_CharacterTargetRot;
                 camera.localRotation = m_CameraTargetRot;
             }
-            //CameraTilt(camera);
 
             UpdateCursorLock();
         }
@@ -106,27 +97,8 @@ namespace Q3Movement
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
             }
-
-
-        }
-        private void CameraTilt(Transform camera)
-        {
-            //m_MoveInput.x // [-1, 1]
-            //m_Camera.transform.rotation
-
-            float zRotTarget = Input.GetAxisRaw("Horizontal") * -m_TiltMaxRotation;
-            //float zRot = Mathf.SmoothDamp(camera.localRotation.eulerAngles.z, zRotTarget, ref tiltVelocity, 0.3f);
-            Quaternion targetRotation = Quaternion.Euler(camera.localRotation.eulerAngles.x,
-                camera.localRotation.eulerAngles.y,
-                zRotTarget);
-
-            Debug.Log(targetRotation.eulerAngles);
-            //Debug.Log(m_Camera.transform.localRotation);
-
-            camera.localRotation = Quaternion.Slerp(camera.localRotation, targetRotation, m_TiltSpeed * Time.deltaTime);
         }
 
-        /*
         private Quaternion ClampRotationAroundXAxis(Quaternion q)
         {
             q.x /= q.w;
@@ -142,6 +114,5 @@ namespace Q3Movement
 
             return q;
         }
-        */
     }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerPair : MonoBehaviour
+public class TowerPair : Enemy
 {
     [SerializeField] float slowPercent = -0.1f;
     [SerializeField] ParticleSystem hitEffect = null;
@@ -13,7 +13,8 @@ public class TowerPair : MonoBehaviour
     [SerializeField] private TowerIndividual Tow1;
     [SerializeField] private TowerIndividual Tow2;
 
-    private bool BarrierActive;
+
+    private bool BarrierActive = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +25,22 @@ public class TowerPair : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Tow1.incapacitated && Tow1.incapacitated)
+        {
+            Die();
+        }
+        if(Tow1.incapacitated || Tow1.incapacitated)
+        {
+            if (BarrierActive)
+            {
+                DisableWall();
+            }
+            
+        }
+        else if (BarrierActive)
+        {
+            ActivateWall();
+        }
     }
 
     private void OnTriggerEnter(Collider trigger)
@@ -44,6 +60,7 @@ public class TowerPair : MonoBehaviour
 
     private void ActivateWall()
     {
+        BarrierActive = true;
         BarrierCollider.enabled = true;
         BarrierLR.enabled = true;
 
@@ -51,8 +68,9 @@ public class TowerPair : MonoBehaviour
 
     private void DisableWall()
     {
-        BarrierLR.enabled = true;
-        BarrierCollider.enabled = true;
+        BarrierActive = false;
+        BarrierLR.enabled = false;
+        BarrierCollider.enabled = false;
     }
 
 }

@@ -688,13 +688,13 @@ MonoBehaviour:
   m_MouseLook:
     m_XSensitivity: 2
     m_YSensitivity: 2
-    m_ClampVerticalRotation: 0
+    m_ClampVerticalRotation: 1
     m_MinimumX: -90
     m_MaximumX: 90
     m_Smooth: 0
     m_SmoothTime: 5
     m_LockCursor: 1
-    m_TiltMaxRotation: 90
+    m_TiltMaxRotation: 89.99
     m_TiltSpeed: 1
   m_Friction: 6
   m_Gravity: 20
@@ -713,6 +713,8 @@ MonoBehaviour:
     MaxSpeed: 1
     Acceleration: 50
     Deceleration: 50
+  m_BerserkGauge: {fileID: 0}
+  m_GaugeVisuals: {fileID: 0}
 --- !u!114 &2918424449679861313
 MonoBehaviour:
   m_ObjectHideFlags: 0
