@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float Health = 50f;
+    protected float initialHealth;
 
 
     public AudioSource SoundSource;
@@ -21,6 +22,7 @@ public class Enemy : MonoBehaviour
 
     public void Start()
     {
+        initialHealth = Health;
         player = GameManager.Player.GetComponent<Q3PlayerController>();
     }
 

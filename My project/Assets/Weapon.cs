@@ -35,14 +35,15 @@ public class Weapon : MonoBehaviour
         SoundSource.PlayOneShot(SoundClip);
         anim.SetTrigger("Shoot");
 
-        RaycastHit hit;
-        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, Range))
+        RaycastHit[] hits = Physics.RaycastAll(fpsCam.transform.position, fpsCam.transform.forward, Range);
+
+        foreach (RaycastHit hit in hits)
         {
             Enemy shot = hit.transform.GetComponent<Enemy>();
-            if(shot != null)
+            if (shot != null)
             {
                 shot.TakeDamage(Damage);
-                
+                break;
             }
         }
     }

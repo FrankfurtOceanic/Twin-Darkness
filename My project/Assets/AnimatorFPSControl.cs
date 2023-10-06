@@ -12,7 +12,6 @@ public class AnimatorFPSControl : MonoBehaviour
     void Start()
     {
         animator = this.GetComponent<Animator>();
-        Debug.Log(animator.name);
         animator.StopPlayback();
     }
 
