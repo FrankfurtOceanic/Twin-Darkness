@@ -8,9 +8,9 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: New Material
-  m_Shader: {fileID: -6465566751694194690, guid: 6fa4ea2652ab46d45afbabbd88f8bd45,
+  m_Shader: {fileID: -6465566751694194690, guid: 5fa38520fc4a1b5438edb95c8db3d0c4,
     type: 3}
-  m_Parent: {fileID: 2100000, guid: 694b7fb6490dddf45b2bc3254c026f5d, type: 2}
+  m_Parent: {fileID: 2100000, guid: 94fc1beaa1643734f8b136d748427924, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _MAIN_LIGHT_CALCULATE_SHADOWS
